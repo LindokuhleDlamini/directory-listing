@@ -1,0 +1,238 @@
+<div class="directory-listing-container">
+    <!-- Header -->
+
+    <header class="explorer-header">
+        <div class="container-fluid">
+            <div class="header-content">
+                <div class="header-title">
+                    <i class="bi bi-folder2-open header-icon"></i>
+                    <h1>Directory Listing</h1>
+                </div>
+
+                <div class="header-actions">
+                    <button class="btn btn-light" (click)="toggleBookmarksPanel()" [class.active]="showBookmarksPanel"
+                        title="Bookmarks">
+                        <i class="bi bi-bookmarks"></i>
+                    </button>
+                    <button class="btn btn-light" (click)="toggleSearch()" title="Search (Ctrl+K)">
+                        <i class="bi bi-search me-1"></i> Search
+                    </button>
+                    <button class="btn btn-light" (click)="navigateBack()" [disabled]="!canGoBack()"
+                        title="Go Back">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                    <button class="btn btn-light" (click)="refresh()" title="Refresh">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- <div class="row mb-3">
+        <div class="header-actions">
+            <h1 class="h3 mb-0">Directory Listing</h1>
+            <button class="btn btn-light" (click)="toggleBookmarksPanel()" [class.active]="showBookmarksPanel"
+                title="Bookmarks">
+                <i class="bi bi-bookmarks"></i>
+            </button>
+
+            <div class="btn-group me-2">
+                <button class="btn btn-outline-primary" (click)="toggleSearch()" title="Search">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+            <button class="btn btn-outline-secondary me-2" (click)="navigateBack()" [disabled]="!canGoBack()"
+                title="Go Back">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <button class="btn btn-outline-secondary" (click)="refresh()" title="Refresh">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
+    </div> -->
+
+    <div class="breadcrumb-container fade-in">
+
+        <div class="current-path">
+            {{ currentPath }}
+        </div>
+    </div>
+    <app-bookmark-panel *ngIf="showBookmarksPanel"></app-bookmark-panel>
+
+    <div class="card mb-3" *ngIf="showSearch">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Search in {{ currentPath }}</h5>
+            <button type="button" class="btn-close" (click)="clearSearch()" aria-label="Close"></button>
+        </div>
+        <div class="card-body">
+            <div class="input-group">
+                <input #searchInput type="text" class="form-control" placeholder="Search files and folders..."
+                    [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+                <button class="btn btn-primary" (click)="onSearch()" [disabled]="isSearching">
+                    <i class="bi bi-search" *ngIf="!isSearching"></i>
+                    <span class="spinner-border spinner-border-sm" *ngIf="isSearching"></span>
+                    Search
+                </button>
+            </div>
+
+            <div *ngIf="searchResults.length > 0" class="mt-3">
+                <h6>Search Results ({{ searchResults.length }})</h6>
+                <div class="list-group">
+                    <a *ngFor="let item of searchResults" href="javascript:void(0)"
+                        class="list-group-item list-group-item-action"
+                        (click)="item.type === 'directory' ? navigateToPath(item.path) : null">
+                        <div class="d-flex align-items-center">
+                            <i class="bi me-2" [class.bi-folder-fill]="item.type === 'directory'"
+                                [class.bi-file-earmark]="item.type === 'file'"
+                                [class.text-warning]="item.type === 'directory'"
+                                [class.text-primary]="item.type === 'file'"></i>
+                            <div class="flex-grow-1">
+                                <strong>{{ item.name }}</strong>
+                                <div class="text-muted small">
+                                    {{ item.path }}
+                                    <span *ngIf="item.type === 'file'" class="ms-2">
+                                        {{ item.size | fileSize }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div *ngIf="searchTerm && searchResults.length === 0 && !isSearching" class="text-center py-3">
+                <i class="bi bi-search display-6 text-muted"></i>
+                <p class="text-muted">No results found for "{{ searchTerm }}"</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div class="alert alert-danger" *ngIf="error">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{ error }}
+    </div>
+
+    <!-- Pagination top-->
+    <div class="row mb-3" *ngIf="directoryListing && totalItems > 0">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <span class="me-2">Show</span>
+                <select class="form-select form-select-sm" style="width: auto;" [ngModel]="pageSize"
+                    (ngModelChange)="onPageSizeChange($event)">
+                    <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                </select>
+                <span class="ms-2">items per page</span>
+            </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <span class="text-muted">{{ getPaginationInfo() }}</span>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-spinner" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Directory Content -->
+    <div *ngIf="directoryListing && !isLoading">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    {{ directoryListing.items.length }} item{{ directoryListing.items.length !== 1 ? 's' : '' }}
+                    in {{ directoryListing.path }}
+                </span>
+                <small class="text-muted">Total: {{ directoryListing.totalCount }}</small>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Size</th>
+                                <th>Type</th>
+                                <th>Created</th>
+                                <th>Permissions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of directoryListing.items" class="file-item"
+                                (click)="item.type === 'directory' ? navigateToPath(item.path) : null"
+                                [class.cursor-pointer]="item.type === 'directory'">
+                                <td>
+                                    <span class="d-flex align-items-center">
+                                        <i class="bi me-2" [class.bi-folder-fill]="item.type === 'directory'"
+                                            [class.bi-file-earmark]="item.type === 'file'"
+                                            [class.text-warning]="item.type === 'directory'"
+                                            [class.text-primary]="item.type === 'file'"></i>
+                                        {{ item.name }}
+                                    </span>
+                                </td>
+                                <td class="file-size">
+                                    {{ item.type === 'directory' ? '-' : (item.size | fileSize) }}
+                                </td>
+                                <td>
+                                    <span class="badge" [ngClass]="{
+                    'bg-primary': item.type === 'file',
+                    'bg-success': item.type === 'directory'
+                  }">
+                                        {{ item.extension || 'unknown' }}
+                                    </span>
+                                </td>
+                                <td>{{ item.created | dateFormat:'short' }}</td>
+                                <td>
+                                    <span class="permissions-badge badge bg-secondary">
+                                        {{ item.permissions }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <app-bookmark-button *ngIf="item.type === 'directory'" [path]="item.path"
+                                        [name]="item.name" [size]="'sm'"></app-bookmark-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination buttom-->
+    <div class="card-footer" *ngIf="totalPages > 1">
+        <nav aria-label="Directory pagination">
+            <ul class="pagination justify-content-center mb-0">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" href="javascript:void(0)" (click)="onPageChange(currentPage - 1)">
+                        Previous
+                    </a>
+                </li>
+
+                <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                    [class.active]="currentPage === i + 1">
+                    <a class="page-link" href="javascript:void(0)" (click)="onPageChange(i + 1)">
+                        {{ i + 1 }}
+                    </a>
+                </li>
+
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" href="javascript:void(0)" (click)="onPageChange(currentPage + 1)">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div *ngIf="directoryListing && directoryListing.items.length === 0 && !isLoading" class="text-center py-5">
+        <i class="bi bi-folder-x display-4 text-muted"></i>
+        <p class="text-muted mt-3">This directory is empty</p>
+    </div>
+</div>

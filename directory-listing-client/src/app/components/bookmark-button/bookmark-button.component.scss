@@ -1,0 +1,21 @@
+:host {
+  display: inline-block;
+}
+
+.btn {
+  transition: all 0.2s ease;
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.spinner-border {
+  width: 1em;
+  height: 1em;
+  border-width: 0.15em;
+}

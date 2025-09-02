@@ -1,0 +1,122 @@
+[
+  {
+    "path": "/",
+    "name": "/",
+    "lastAccessed": "2025-09-02T11:13:38.794Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/.nofollow",
+    "name": ".nofollow",
+    "lastAccessed": "2025-09-02T11:12:48.488Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Applications/DataGrip.app/Contents",
+    "name": "Contents",
+    "lastAccessed": "2025-09-02T11:12:42.789Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Applications/DataGrip.app",
+    "name": "DataGrip.app",
+    "lastAccessed": "2025-09-02T11:12:41.307Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Applications",
+    "name": "Applications",
+    "lastAccessed": "2025-09-02T11:12:38.294Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/tmp",
+    "name": "tmp",
+    "lastAccessed": "2025-09-02T11:09:44.159Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Library",
+    "name": "Library",
+    "lastAccessed": "2025-09-02T11:08:34.147Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/.resolve",
+    "name": ".resolve",
+    "lastAccessed": "2025-09-02T10:51:51.913Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/etc",
+    "name": "etc",
+    "lastAccessed": "2025-09-02T10:50:55.546Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/.vol",
+    "name": ".vol",
+    "lastAccessed": "2025-09-02T10:50:43.102Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Users",
+    "name": "Users",
+    "lastAccessed": "2025-09-02T10:50:29.177Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Library/Application Support",
+    "name": "Application Support",
+    "lastAccessed": "2025-09-02T10:38:35.621Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/usr/bin",
+    "name": "bin",
+    "lastAccessed": "2025-09-02T10:25:32.668Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/usr",
+    "name": "usr",
+    "lastAccessed": "2025-09-02T10:25:26.168Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/System",
+    "name": "System",
+    "lastAccessed": "2025-09-01T15:38:44.181Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Users/lindo",
+    "name": "lindo",
+    "lastAccessed": "2025-09-01T15:38:04.571Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/dev",
+    "name": "dev",
+    "lastAccessed": "2025-09-01T15:37:57.052Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/private",
+    "name": "private",
+    "lastAccessed": "2025-08-31T13:01:15.031Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/private/etc",
+    "name": "etc",
+    "lastAccessed": "2025-08-31T13:01:07.743Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/Applications/AnyDesk.app",
+    "name": "AnyDesk.app",
+    "lastAccessed": "2025-08-31T12:58:03.812Z",
+    "accessCount": 2
+  }
+]

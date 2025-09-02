@@ -1,0 +1,99 @@
+<div class="bookmarks-panel">
+  <button 
+    class="btn btn-outline-primary bookmarks-toggle"
+    (click)="togglePanel()"
+    [title]="isOpen ? 'Hide bookmarks' : 'Show bookmarks'"
+  >
+    <i class="bi bi-bookmarks"></i>
+    <span class="ms-1">Bookmarks</span>
+    <span class="badge bg-secondary ms-1" *ngIf="bookmarks.length > 0">
+      {{ bookmarks.length }}
+    </span>
+  </button>
+
+  <div class="bookmarks-content card" [class.show]="isOpen">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-bookmarks me-2"></i>Bookmarks
+      </h5>
+      <button 
+        type="button" 
+        class="btn-close"
+        (click)="isOpen = false"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <div class="card-body">
+      <!-- Loading State -->
+      <div class="text-center py-3" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mt-2">Loading bookmarks...</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="alert alert-danger" *ngIf="error && !isLoading">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        {{ error }}
+        <button type="button" class="btn-close float-end" (click)="error = ''"></button>
+      </div>
+
+      <!-- Empty State -->
+      <div class="text-center py-4" *ngIf="!isLoading && !error && !hasBookmarks">
+        <i class="bi bi-bookmarks display-6 text-muted"></i>
+        <p class="text-muted mt-2">No bookmarks yet</p>
+        <p class="text-muted small">Add bookmarks to quickly access your favorite directories</p>
+      </div>
+
+      <!-- Bookmarks List -->
+      <div class="bookmarks-list" *ngIf="!isLoading && hasBookmarks">
+        <div 
+          *ngFor="let bookmark of sortedBookmarks"
+          class="bookmark-item"
+          (click)="navigateToBookmark(bookmark)"
+        >
+          <div class="bookmark-content">
+            <i class="bi bi-folder2 text-warning me-2"></i>
+            <div class="bookmark-details">
+              <div class="bookmark-name">{{ bookmark.name }}</div>
+              <div class="bookmark-path">{{ bookmark.path }}</div>
+              <div class="bookmark-meta">
+                <small class="text-muted">
+                  Added: {{ bookmark.createdAt | date:'shortDate' }}
+                  <span *ngIf="bookmark.lastAccessed">
+                    • Last accessed: {{ bookmark.lastAccessed | date:'shortDate' }}
+                  </span>
+                </small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bookmark-actions">
+            <button 
+              class="btn btn-sm btn-outline-secondary"
+              (click)="editBookmark(bookmark, $event)"
+              title="Edit bookmark"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button 
+              class="btn btn-sm btn-outline-danger ms-1"
+              (click)="deleteBookmark(bookmark, $event)"
+              title="Delete bookmark"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer" *ngIf="hasBookmarks">
+      <small class="text-muted">
+        {{ bookmarks.length }} bookmark{{ bookmarks.length !== 1 ? 's' : '' }}
+      </small>
+    </div>
+  </div>
+</div>

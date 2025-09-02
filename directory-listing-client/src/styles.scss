@@ -1,0 +1,249 @@
+/* Import Bootstrap functions and variables first */
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+/* Custom color palette */
+$primary: #2c5aa0;
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+);
+
+/* Custom variables */
+:root {
+  --file-explorer-sidebar-width: 280px;
+  --file-explorer-header-height: 60px;
+  --file-explorer-transition: all 0.3s ease;
+  --file-explorer-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --file-explorer-border-radius: 8px;
+  
+  --file-color: #2c5aa0;
+  --directory-color: #198754;
+  --symlink-color: #6f42c1;
+  --background-hover: #f8f9fa;
+  --background-selected: #e3f2fd;
+}
+
+/* Import Bootstrap */
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+/* Custom global styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7f9;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #a8a8a8;
+  }
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Card enhancements */
+.card {
+  border: none;
+  border-radius: var(--file-explorer-border-radius);
+  box-shadow: var(--file-explorer-shadow);
+  transition: var(--file-explorer-transition);
+  
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Button enhancements */
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: var(--file-explorer-transition);
+  
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+  }
+}
+
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Form enhancements */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  transition: var(--file-explorer-transition);
+  
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+  }
+}
+
+.form-select {
+  border-radius: 6px;
+}
+
+/* Table enhancements */
+.table {
+  margin-bottom: 0;
+  
+  th {
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+  }
+  
+  td {
+    vertical-align: middle;
+    border-color: #e9ecef;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+/* Badge enhancements */
+.badge {
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+/* Alert enhancements */
+.alert {
+  border: none;
+  border-radius: var(--file-explorer-border-radius);
+  border-left: 4px solid;
+  
+  &.alert-danger {
+    border-left-color: $danger;
+  }
+  
+  &.alert-success {
+    border-left-color: $success;
+  }
+  
+  &.alert-warning {
+    border-left-color: $warning;
+  }
+  
+  &.alert-info {
+    border-left-color: $info;
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .btn-group .btn {
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .card {
+    border: 1px solid #dee2e6;
+    box-shadow: none;
+  }
+}
+
+/* Rotation animation for refresh button */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotating {
+  animation: rotate 1s ease-in-out;
+}
+
+/* Hover animations */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Focus animations */
+.focus-grow {
+  transition: transform 0.1s ease;
+  
+  &:focus {
+    transform: scale(1.02);
+  }
+}
+
+/* Loading bar animation */
+@keyframes loadingBar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.loading-bar {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, $primary, transparent);
+  animation: loadingBar 1.5s infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
