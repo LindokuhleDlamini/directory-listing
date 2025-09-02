@@ -4,7 +4,7 @@ import directoryListingRoutes from '../../routes/directoryListingRoutes';
 import { DirectoryListingService } from '../../services/DirectoryListingService';
 import { DirectoryListing } from '../../models/DirectoryListing';
 
-jest.mock('../src/services/DirectoryListingService');
+jest.mock('../../services/DirectoryListingService');
 
 describe('Directory Listing API Integration Tests', () => {
   let app: express.Application;

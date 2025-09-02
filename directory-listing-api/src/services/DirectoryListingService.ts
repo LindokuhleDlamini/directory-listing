@@ -68,7 +68,10 @@ export class DirectoryListingService {
         directoryListing = {
             path: directoryPath,
             items: fileItems,
-            totalCount: fileItems.length
+            totalCount: fileItems.length,
+            page,
+            pageSize,
+            totalPages: Math.ceil(fileItems.length / pageSize)
         };
         return directoryListing as DirectoryListing;
     }
