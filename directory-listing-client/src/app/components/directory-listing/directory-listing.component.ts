@@ -184,7 +184,6 @@ export class DirectoryListingComponent implements OnInit {
     this.error = error.message || 'An unexpected error occurred';
     this.isLoading = false;
 
-    // Auto-dismiss error after 5 seconds
     setTimeout(() => {
       this.error = null;
     }, 5000);

@@ -203,49 +203,6 @@ export class DirectoryListingService {
         }
     }
 
-    // private async getDirectoryItemsWithOpendir(directoryPath: string, page: number, pageSize: number): Promise<any> {
-    //     const items: FileItem[] = [];
-    //     let totalCount = 0;
-    //     const startIndex = (page - 1) * pageSize;
-    //     const endIndex = startIndex + pageSize;
-
-    //     try {
-    //         await fs.promises.access(directoryPath, fs.constants.R_OK);
-    //         const dir = await fs.promises.opendir(directoryPath);
-
-    //         for await (const dirent of dir) {
-    //             totalCount++;
-
-    //             if (this.shouldSkipFile(dirent.name)) {
-    //                 continue;
-    //             }
-
-
-    //             if (totalCount > startIndex && totalCount <= endIndex) {
-    //                 try {
-    //                     const fullPath = path.join(directoryPath, dirent.name);
-    //                     const fileItem = await DirectoryListingUtils.getFileItem(fullPath, dirent.name);
-    //                     items.push(fileItem);
-    //                 } catch (error) {
-    //                     console.warn(`Error processing ${dirent.name}:`, error);
-    //                 }
-    //             }
-
-    //             if (totalCount > endIndex) {
-    //                 break;
-    //             }
-    //         }
-
-    //         return {
-    //             items,
-    //             totalCount
-    //         };
-
-    //     } catch (error: any) {
-    //         throw new Error(`Failed to read directory: ${error.message}`);
-    //     }
-    // }
-
     private validateDirectoryPath(directoryPath: string): void {
         if (!directoryPath || typeof directoryPath !== 'string') {
             throw new Error('Directory path is required and must be a string');

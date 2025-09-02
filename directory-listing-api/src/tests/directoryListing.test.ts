@@ -2,27 +2,22 @@ import { DirectoryListingService } from '../services/DirectoryListingService';
 import fs from 'fs';
 import path from 'path';
 
-// Mock the dependencies
 jest.mock('fs');
 jest.mock('path');
 jest.mock('../utils/DirectoryListingUtils');
 
-// Import the actual utils to mock specific functions
 import  {DirectoryListingUtils} from '../utils/DirectoryListingUtils';
 
 describe('DirectoryListingService', () => {
   let directoryListingService: any;
 
   beforeEach(() => {
-    // Clear all mocks
     jest.clearAllMocks();
 
-    // Mock path methods
     (path.isAbsolute as jest.Mock).mockReturnValue(true);
     (path.join as jest.Mock).mockImplementation((...args) => args.join('/'));
 
     directoryListingService = new DirectoryListingService();
-    // Mock the access control service getter
   });
 
   describe('Basic directory listing', () => {
@@ -53,11 +48,10 @@ describe('DirectoryListingService', () => {
     });
 
     it('should handle errors when reading directory', async () => {
-      // Mock directory exists
+
       (fs.existsSync as jest.Mock).mockReturnValue(true);
       (fs.statSync as jest.Mock).mockReturnValue({ isDirectory: () => true });
 
-      // Mock the directory listing utility to reject
       (DirectoryListingUtils.readDirectory as jest.Mock).mockRejectedValue(new Error('Directory does not exist'));
 
       await expect(directoryListingService.getDirectoryListing('/invalid')).rejects.toThrow('Directory does not exist');
@@ -80,7 +74,6 @@ describe('DirectoryListingService', () => {
   describe('Caching', () => {
     beforeEach(() => {
       jest.useFakeTimers();
-      // Mock directory exists and is directory
       (fs.existsSync as jest.Mock).mockReturnValue(true);
       (fs.statSync as jest.Mock).mockReturnValue({ isDirectory: () => true });
     });
@@ -103,9 +96,8 @@ describe('DirectoryListingService', () => {
         attributes: ['file']
       });
 
-      // First call
+
       const result1 = await directoryListingService.getDirectoryListing('/cached/path');
-      // Second call should be cached
       const result2 = await directoryListingService.getDirectoryListing('/cached/path');
 
       expect(DirectoryListingUtils.readDirectory).toHaveBeenCalledTimes(2);
@@ -126,13 +118,10 @@ describe('DirectoryListingService', () => {
         attributes: ['file']
       });
 
-      // First call
       const result1 = await directoryListingService.getDirectoryListing('/expiring/path');
       
-      // Advance time beyond cache TTL (default is 30 seconds)
       jest.advanceTimersByTime(31000);
 
-      // Second call should not be cached
       const result2 = await directoryListingService.getDirectoryListing('/expiring/path');
 
       expect(DirectoryListingUtils.readDirectory).toHaveBeenCalledTimes(2);

@@ -1,6 +1,5 @@
 import { jest } from '@jest/globals';
 
-// Mock fs module
 jest.mock('fs', () => {
   const actualFs = jest.requireActual('fs') as any;
   return {
@@ -15,7 +14,6 @@ jest.mock('fs', () => {
   };
 });
 
-// Mock path module
 jest.mock('path', () => {
   const actualPath = jest.requireActual('path') as any;
   return {

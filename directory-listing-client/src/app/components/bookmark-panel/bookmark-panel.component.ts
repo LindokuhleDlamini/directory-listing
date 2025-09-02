@@ -54,7 +54,6 @@ export class BookmarksPanelComponent implements OnInit {
   
 
   navigateToBookmark(bookmark: Bookmark): void {
-    //this.navigationService.(bookmark.path);
     this.updateBookmarkAccess(bookmark);
     this.isOpen = false;
   }
@@ -104,10 +103,6 @@ export class BookmarksPanelComponent implements OnInit {
       });
     }
   }
-
-  // get canManageBookmarks() {
-  //   //return this.authService.isAuthenticated();
-  // }
 
   get hasBookmarks(): boolean {
     return this.bookmarks.length > 0;
