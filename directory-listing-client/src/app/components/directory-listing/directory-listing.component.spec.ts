@@ -111,7 +111,6 @@ describe('DirectoryListingComponent', () => {
     component.ngOnInit();
     tick();
 
-    // Navigate to page 2
     component.onPageChange(2);
     tick();
 
@@ -159,7 +158,6 @@ describe('DirectoryListingComponent', () => {
     component.ngOnInit();
     tick();
 
-    // Change page size
     component.onPageSizeChange(5000);
     tick();
 
