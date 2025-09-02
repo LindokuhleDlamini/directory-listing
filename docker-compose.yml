@@ -75,7 +75,7 @@ volumes:
     driver: local
 
 networks:
-  file-explorer-network:
+  directory-listing-network:
     driver: bridge
     ipam:
       driver: default
