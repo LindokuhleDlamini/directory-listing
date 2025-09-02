@@ -1,5 +1,17 @@
 [
   {
+    "path": "/large-dir",
+    "name": "large-dir",
+    "lastAccessed": "2025-09-02T14:34:07.749Z",
+    "accessCount": 2
+  },
+  {
+    "path": "/very-large-dir",
+    "name": "very-large-dir",
+    "lastAccessed": "2025-09-02T14:34:07.736Z",
+    "accessCount": 2
+  },
+  {
     "path": "/",
     "name": "/",
     "lastAccessed": "2025-09-02T11:13:38.794Z",
@@ -105,18 +117,6 @@
     "path": "/private",
     "name": "private",
     "lastAccessed": "2025-08-31T13:01:15.031Z",
-    "accessCount": 2
-  },
-  {
-    "path": "/private/etc",
-    "name": "etc",
-    "lastAccessed": "2025-08-31T13:01:07.743Z",
-    "accessCount": 2
-  },
-  {
-    "path": "/Applications/AnyDesk.app",
-    "name": "AnyDesk.app",
-    "lastAccessed": "2025-08-31T12:58:03.812Z",
     "accessCount": 2
   }
 ]
